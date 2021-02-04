@@ -27,7 +27,11 @@ void ConstruitHisto(char *contenu, int histo[128]);
 //------------------------------------------------- MAIN
 int main()
 {
-    char *contenu = LectureFichier("test.txt");
+    char nomFichier[30];
+    printf("Saisir nom de fichier : ");
+    scanf("%s", &nomFichier);
+    
+    char *contenu = LectureFichier(nomFichier);
     int histo[128];
 
     printf("%s\n", contenu);
@@ -68,7 +72,6 @@ char *LectureFichier(char *nom)
     }
     return contenu;
 }
-
 
 void ConstruitHisto(char *contenu, int histo[128])
 {
