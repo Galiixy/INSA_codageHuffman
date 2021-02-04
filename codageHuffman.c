@@ -51,25 +51,30 @@ int main()
 char *LectureFichier(char *nom)
 {
     FILE *fichier = fopen(nom, "r"); // Ouverture en lecture
-
+    int longueur = 0 ;
     if (fichier == NULL)
     {
         printf("Impossible d'ouvrir le fichier");
         exit(-1);
     }
 
-    // instanciation de la memoire
-    char *contenu = (char *)malloc(LongMaxFichier * sizeof(char));
-    char *caractere = (char *)malloc(1 * sizeof(char));
+    fseek(fichier, 0, SEEK_END); // on va a la derniere ligne du fichier
+    longueur = ftell(fichier); // longueur de la chaine de caractere du fichier
 
-    // initialisation a vide pour eviter que le contenu ait des donnees incoherentes
-    sprintf(contenu, "%c", '\0');
-
-    while (!feof(fichier))
-    { //jusqua la fin du fichier
-        sprintf(caractere, "%c", fgetc(fichier));
-        strcat(contenu, caractere);
+    if (longueur == 0){
+        printf("Impossible de lire un fichier vide");
+        exit(-1);
     }
+    
+    fseek(fichier, 0, SEEK_SET); // on retourne au debut pour lire le fichier
+    char * contenu = (char *) malloc(longueur); // on construit la variable contenu en fonction de la longueur du fichier
+    
+    for (int i = 0; i <= longueur; i++)
+    {
+        contenu[i] = '\0'; // initialisation a vide pour eviter que le contenu ait des donnees incoherentes
+    }
+    
+    fread(contenu,longueur,1,fichier); // lecture du fichier
     return contenu;
 }
 
