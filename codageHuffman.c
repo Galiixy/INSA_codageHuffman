@@ -13,6 +13,18 @@
 //------------------------------------------------- CONSTANTES
 #define LongMaxFichier 1024
 
+//------------------------------------------------- STRUCTURES
+typedef struct {
+    int nbOccurences; 
+    char caractere;
+    struct Arbre * b[2]; //branche 
+}Arbre;
+
+typedef struct{
+    Arbre * arbre;
+    struct Liste * suivante; 
+}Liste;
+
 //------------------------------------------------- Declarations des fonctions
 
 // Mode d'emploi : prend le nom d'un fichier 
@@ -67,13 +79,10 @@ char *LectureFichier(char *nom)
     }
     
     fseek(fichier, 0, SEEK_SET); // on retourne au debut pour lire le fichier
-    char * contenu = (char *) malloc(longueur); // on construit la variable contenu en fonction de la longueur du fichier
+    char * contenu = (char *) malloc(longueur+1); // on construit la variable contenu en fonction de la longueur du fichier
     
-    for (int i = 0; i <= longueur; i++)
-    {
-        contenu[i] = '\0'; // initialisation a vide pour eviter que le contenu ait des donnees incoherentes
-    }
-    
+    contenu[longueur] = '\0'; // initialisation a vide pour eviter que le contenu ait des donnees incoherentes
+
     fread(contenu,longueur,1,fichier); // lecture du fichier
     return contenu;
 }
